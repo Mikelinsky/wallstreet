@@ -101,10 +101,6 @@
     .small-carousel__img {
         left: -20%;
     }
-
-    .main-content {
-        margin-top: 601.141px;
-    }
 }
 
 /* Medium devices (tablets, less than 992px)*/
@@ -213,9 +209,6 @@
     .carousel-body__row .col-md-4{
         flex: 0 0 33.333333%;
         max-width: 33.333333%;
-    }
-    .main-content {
-        margin-top: 100vh;
     }
     .carousel-body {
         height: 100vh;

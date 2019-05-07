@@ -310,10 +310,14 @@ body {
     color: #ad9c5f;
 }
 
+.fantom-header {
+    height: 601.141px;
+    background: #222222;
+}
+
 
 /*-------------------MAIN-----------------------*/
 .main-content {
-    margin-top: 628.141px;
     background: #fff;
 }
 

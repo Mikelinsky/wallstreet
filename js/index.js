@@ -42,49 +42,48 @@ $(document).ready(function () {
 
   /* smooth scroll for mobile */
 
-  let sec = $('.item').first();
-  let canScroll = true;
+  let windowOnSecond = false;
+  let positionOfSecond = $(".small-carousel").offset().top;
+  let scrollPosition;
+  let lastScrollPosition = 0;
 
-  $(window).on('mousewheel DOMMouseScroll touchmove', (e) => { //usuwam zdarzenie scroll bo podczas płynnego przesuwania by się nam wywoływałą kilka razy ta funkcja, czego nie chcemy
 
-    if (canScroll == false) return;
-    canScroll = false;
+  $(document).ready(function () {
 
-    if (typeof e.originalEvent.detail == 'number' && e.originalEvent.detail !== 0) {
-      if (e.originalEvent.detail > 0) {
-        if (sec.nextAll('.item:first').length) {
-          sec = sec.nextAll('.item:first')
+    function watchScroll() {
+      scrollPosition = window.pageYOffset;
+
+    
+      if (scrollPosition > lastScrollPosition) {
+        /*detect scroll direction-DOWN*/
+        if ((scrollPosition < positionOfSecond) && (windowOnSecond === false)) {
+          $("html, body").animate({ scrollTop: $(".small-carousel").offset().top }, 1000, function () {canScroll = true});
+          windowOnSecond = true;
+          console.log(scrollPosition);
+        }
+      } else {
+        /*detect scroll direction-UP*/
+        if ((scrollPosition <= positionOfSecond) && (windowOnSecond === true)) {
+          $("html, body").animate({ scrollTop: $(".fantom-header").offset().top }, 1000, function () {canScroll = true});
+          windowOnSecond = false;
+          console.log(scrollPosition);
         }
       }
-      else if (e.originalEvent.detail < 0) {
-        if (sec.prevAll('.item:first').length) {
-          sec = sec.prevAll('.item:first')
-        }
-      }
+      lastScrollPosition = scrollPosition <= 0 ? 0 : scrollPosition;
     }
-    else if (typeof e.originalEvent.wheelDelta == 'number') {
-      if (e.originalEvent.wheelDelta < 0) {
-        if (sec.nextAll('.item:first').length) {
-          sec = sec.nextAll('.item:first')
-        }
+    watchScroll();
 
-      } else if (e.originalEvent.wheelDelta > 0) {
-        if (sec.prevAll('.item:first').length) {
-          sec = sec.prevAll('.item:first')
-        }
-      }
-    }
-    if (window.scrollY > $('#section-2').offset().top) {//sprawdza czy wartosć naszego scrolla w osi Y jest większa niz pozycja góry diva #section-2 licząc od góry strony
 
+
+    if ($(window).width() <= 767) {
+      $(window).on('scroll', _.debounce(watchScroll, 200, { leading: true }));
     }
-    else {
-      //kod z scroll.html
-      $([document.documentElement]).animate({
-        scrollTop: sec.offset().top
-      }, 500, function () {
-        canScroll = true;
-      });
-    }
+    $(window).resize(function () {
+      if ($(window).width() <= 767) {
+        $(window).on('scroll', _.debounce(watchScroll, 200, { leading: true }));
+        positionOfSecond = $(".second-section").offset().top;
+      }
+    });
   });
 
 });

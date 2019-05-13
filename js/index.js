@@ -46,8 +46,8 @@ $(document).ready(function () {
   let canScroll = true;
 
   if ($(window).width() <= 767) {
-
-    $(window).on('mousewheel DOMMouseScroll touchmove', (e) => { //usuwam zdarzenie scroll bo podczas płynnego przesuwania by się nam wywoływałą kilka razy ta funkcja, czego nie chcemy
+//mousewheel DOMMouseScroll
+    $(window).on('touchstart', (e) => { //usuwam zdarzenie scroll bo podczas płynnego przesuwania by się nam wywoływałą kilka razy ta funkcja, czego nie chcemy
 
       if (canScroll == false) return;
       canScroll = false;

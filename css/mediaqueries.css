@@ -210,9 +210,11 @@
         flex: 0 0 33.333333%;
         max-width: 33.333333%;
     }
-    .carousel-body {
+    
+    .carousel-body, .fantom-header {
         height: 100vh;
     }
+    
     .carousel-body--height {
         height: unset;
     }
@@ -286,7 +288,8 @@
 
     /*--SMALL CAROUSEL--*/
     .small-carousel {
-        height: 100vh;
+        height: 100vh; 
+        padding-top: 84.563px;
     }
     .small-carousel__img {
         left: -76%;

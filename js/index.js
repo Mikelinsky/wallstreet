@@ -45,48 +45,51 @@ $(document).ready(function () {
   let sec = $('.item').first();
   let canScroll = true;
 
-  $(window).on('mousewheel DOMMouseScroll touchmove', (e) => { //usuwam zdarzenie scroll bo podczas płynnego przesuwania by się nam wywoływałą kilka razy ta funkcja, czego nie chcemy
+  if ($(window).width() <= 767) {
 
-    if (canScroll == false) return;
-    canScroll = false;
+    $(window).on('mousewheel DOMMouseScroll touchmove', (e) => { //usuwam zdarzenie scroll bo podczas płynnego przesuwania by się nam wywoływałą kilka razy ta funkcja, czego nie chcemy
 
-    if (typeof e.originalEvent.detail == 'number' && e.originalEvent.detail !== 0) {
-      if (e.originalEvent.detail > 0) {
-        if (sec.nextAll('.item:first').length) {
-          sec = sec.nextAll('.item:first')
+      if (canScroll == false) return;
+      canScroll = false;
+  
+      if (typeof e.originalEvent.detail == 'number' && e.originalEvent.detail !== 0) {
+        if (e.originalEvent.detail > 0) {
+          if (sec.nextAll('.item:first').length) {
+            sec = sec.nextAll('.item:first')
+          }
+        }
+        else if (e.originalEvent.detail < 0) {
+          if (sec.prevAll('.item:first').length) {
+            sec = sec.prevAll('.item:first')
+          }
         }
       }
-      else if (e.originalEvent.detail < 0) {
-        if (sec.prevAll('.item:first').length) {
-          sec = sec.prevAll('.item:first')
+      else if (typeof e.originalEvent.wheelDelta == 'number') {
+        if (e.originalEvent.wheelDelta < 0) {
+          if (sec.nextAll('.item:first').length) {
+            sec = sec.nextAll('.item:first')
+          }
+  
+        } else if (e.originalEvent.wheelDelta > 0) {
+          if (sec.prevAll('.item:first').length) {
+            sec = sec.prevAll('.item:first')
+          }
         }
       }
-    }
-    else if (typeof e.originalEvent.wheelDelta == 'number') {
-      if (e.originalEvent.wheelDelta < 0) {
-        if (sec.nextAll('.item:first').length) {
-          sec = sec.nextAll('.item:first')
-        }
-
-      } else if (e.originalEvent.wheelDelta > 0) {
-        if (sec.prevAll('.item:first').length) {
-          sec = sec.prevAll('.item:first')
-        }
+      if (window.scrollY > $('#section-2').offset().top) {//sprawdza czy wartosć naszego scrolla w osi Y jest większa niz pozycja góry diva #section-2 licząc od góry strony
+  
       }
-    }
-    if (window.scrollY > $('#section-2').offset().top) {//sprawdza czy wartosć naszego scrolla w osi Y jest większa niz pozycja góry diva #section-2 licząc od góry strony
+      else {
+        //kod z scroll.html
+        $([document.documentElement]).animate({
+          scrollTop: sec.offset().top
+        }, 500, function () {
+          canScroll = true;
+        });
+      }
+    });
 
-    }
-    else {
-      //kod z scroll.html
-      $([document.documentElement]).animate({
-        scrollTop: sec.offset().top
-      }, 500, function () {
-        canScroll = true;
-      });
-    }
-  });
-
+  }
 });
 
 

@@ -47,12 +47,9 @@ $(document).ready(function () {
   let scrollPosition;
   let lastScrollPosition = 0;
 
-
-  $(document).ready(function () {
-
     function watchScroll() {
       scrollPosition = window.pageYOffset;
-
+      console.log("123");
     
       if (scrollPosition > lastScrollPosition) {
         /*detect scroll direction-DOWN*/
@@ -84,7 +81,7 @@ $(document).ready(function () {
         positionOfSecond = $(".second-section").offset().top;
       }
     });
-  });
+
 
 });
 
